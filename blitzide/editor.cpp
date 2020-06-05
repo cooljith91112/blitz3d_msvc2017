@@ -11,6 +11,12 @@ static const int TEXTLIMIT=16384;
 static const int TEXTLIMIT=1024*1024-1;
 #endif
 
+#ifdef DEBUG
+
+#pragma comment(linker, "/entry:WinMainCRTStartup /subsystem:console")
+#endif // DEBUG
+
+
 static const UINT wm_Find=RegisterWindowMessage( FINDMSGSTRING );
 
 IMPLEMENT_DYNAMIC( Editor,CWnd )
@@ -66,7 +72,7 @@ DWORD Editor::streamIn( LPBYTE buff,LONG cnt,LONG *done ){
 		int sz=is_line.size()-is_curs;
 		if( n+sz>cnt ) sz=cnt-n;
 		memcpy( buff+n,is_line.data()+is_curs,sz );
-		is_curs+=sz;n+=sz;
+		is_curs+=sz;n+=sz;	
 	}
 	*done=n;
 	return 0;
@@ -622,7 +628,8 @@ void Editor::en_msgfilter( NMHDR *nmhdr,LRESULT *result ){
 		edit->TrackPopupMenu( TPM_LEFTALIGN,p.x,p.y,blitzIDE.mainFrame );
 
 	}else if( msg->msg==WM_CHAR ){
-		if( msg->wParam=='\t' ){
+		
+		if( msg->wParam=='\t' ){// Tab Key
 			int lineStart=editCtrl.LineFromChar( selStart );
 			int lineEnd=editCtrl.LineFromChar( selEnd );
 			if( lineEnd<=lineStart ) return;
@@ -644,14 +651,14 @@ void Editor::en_msgfilter( NMHDR *nmhdr,LRESULT *result ){
 			selEnd=editCtrl.LineIndex( lineEnd );
 			setSel();*result=1;
 			editCtrl.HideSelection( false,false );
-		}else if( msg->wParam==13 ){
+		}else if( msg->wParam==13 ){ // Key Enter
 			if( selStart!=selEnd ) return;
 			int k;
 			int ln=editCtrl.LineFromChar( selStart );
 			int pos=selStart-editCtrl.LineIndex( ln );
 			string line=getLine( ln );if( pos>line.size() ) return;
 			for( k=0;k<pos && line[k]=='\t';++k ){}
-			line="\r\n"+line.substr( 0,k )+'\0';
+			line=line.substr( 0,k )+'\0';
 			editCtrl.ReplaceSel( line.data(),true );
 			*result=1;
 		}
