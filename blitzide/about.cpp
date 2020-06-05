@@ -78,7 +78,6 @@ void aboutBlitz( bool delay ){
 	credits+=_credits;
 
 	about.GetDlgItem( IDC_CREDITS )->SetWindowText( credits.c_str() );
-
 	int ide_ver=VERSION&0xffff;
 	int lnk_ver=linker_ver&0xffff;
 	int run_ver=runtime_ver&0xffff;
