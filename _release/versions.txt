@@ -1,5 +1,5 @@
 
-***** V1.2b *****
+***** V1.110b *****
 New Build VS 2017
 Build Icons Changes
 
@@ -67,7 +67,7 @@ A few special cases:
 BufferDirty() command, eg: BufferDirty ImageBuffer( theImage ). If you don't care if such
 images survive loss of graphics, you can skip this.
 
-* Vidmem texture contents will not survive loss of graphics. However, the textures themseleves 
+* Vidmem texture contents will not survive loss of graphics. However, the textures themseleves
 will still exist, and these are supposed to be frequently updated anyway, so this shouldn't
 be a major problem.
 
@@ -96,7 +96,7 @@ Q3BSP loader now tries png and dds files in addition to tga and jpg.
 
 Fixed PlayMusic case sensitive file extension issue.
 
-LoadTexture now loads compressed '.dds' files. 
+LoadTexture now loads compressed '.dds' files.
 
 TextureBuffer() returns 0 for compressed textures.
 
@@ -105,10 +105,10 @@ Compressed anim and cube textures not yet supported.
 Only DXTC modes 1, 3 & 5 are currently supported. Modes 2 & 4 are pretty much never used in the industry, even
 NVidias own DDS exporter for Photoshop now only supports modes 1, 3 & 5.
 
-The loader code stricly adheres to the DDS format, files saved from Photoshop using NVidias DDS exporter will 
+The loader code stricly adheres to the DDS format, files saved from Photoshop using NVidias DDS exporter will
 work fine. If you're getting errors, it could be that your DDS file is non-standard.
 
-The mipmap flag is ignored when loading DDS textures. Instead, if the DDS file contains mipmaps, then they are 
+The mipmap flag is ignored when loading DDS textures. Instead, if the DDS file contains mipmaps, then they are
 loaded & used.
 
 DDS textures will load when used by meshes that are loaded using Blitz3D's various load mesh commands.
@@ -180,7 +180,7 @@ Tightened up collision detection as per bug report postings.
 
 Changed exe code malloc for DEP (Data execution prevention).
 
-Added new 'SystemProperty's: 
+Added new 'SystemProperty's:
 Direct3D7, Direct3DDevice7, DirectDraw7, DirectInput7, AppHWND and AppHINSTANCE.
 
 Possible fix for non-pow2 tex's on GF6800 (don't have one, so untested as yet!)
@@ -197,32 +197,32 @@ Added HWTexUnits(), returns the number of hardware texturing units available.
 Reimplemented the 'bug' that allowed alphablending while multitexturing, but in a slightly more controlled way!
 
 
-***** V1.86 ***** 
+***** V1.86 *****
 
-Fixed: 
+Fixed:
 
-Evil, ancient ImagesCollide bug. 
+Evil, ancient ImagesCollide bug.
 
-Added: 
+Added:
 
-TextureBlend mode 5, for 'multiply 2' blending. This is the same as multiply blending, only 
-the output value is doubled. The idea behind this is that it allows lightmaps to not just 
-darken, but also brighten colormaps. Use a lightmap texel value of .5 (eg: 128,128,128 - 
- actually, .5 can't be represented exactly!) to get 'null' lighting, <.5 to get darkening 
-and >.5 to get lightening. Roll on Ico in Blitz! 
+TextureBlend mode 5, for 'multiply 2' blending. This is the same as multiply blending, only
+the output value is doubled. The idea behind this is that it allows lightmaps to not just
+darken, but also brighten colormaps. Use a lightmap texel value of .5 (eg: 128,128,128 -
+ actually, .5 can't be represented exactly!) to get 'null' lighting, <.5 to get darkening
+and >.5 to get lightening. Roll on Ico in Blitz!
 
-Multiple bone weights. Each vertex can now be influenced by up to 4 bones, each with an 
-arbitrary weight. If more than 4 weights are present, the 'heaviest' 4 are used. Weights 
-are always normalized so that they sum to 1. Bones can still only be imported/created via 
-B3D files. 
+Multiple bone weights. Each vertex can now be influenced by up to 4 bones, each with an
+arbitrary weight. If more than 4 weights are present, the 'heaviest' 4 are used. Weights
+are always normalized so that they sum to 1. Bones can still only be imported/created via
+B3D files.
 
-Note: 
+Note:
 
 The EntityRoll function and Dynamic mesh system have been tweaked a bit. Post any poroblems in the bug reports forum
 
 ***** V1.85 *****
 
-Added: 
+Added:
 
 brush=GetEntityBrush( entity )
 brush=GetSurfaceBrush( surface )
@@ -297,8 +297,8 @@ Fixed unscaled CollisionY bug with ellipsoid collisions.
 Changed EntityOrder so it can be used with cameras as well as models. This allows you to
 force certain camera views to be rendered before or after others.
 
-Custom mesh vertices now have a default color of 255,255,225 and alpha of 1. Perviously, vertex 
-colors defaulted to the less useful value of 0,0,0. This improvement was actually 'accidentally' 
+Custom mesh vertices now have a default color of 255,255,225 and alpha of 1. Perviously, vertex
+colors defaulted to the less useful value of 0,0,0. This improvement was actually 'accidentally'
 introduced in V1.81.
 
 Userlibs problem with duplicate identifiers fixed. Compiler will now refuse to run if there's
@@ -443,7 +443,7 @@ B3D Only:
 
 CopyMesh bug fixed.
 
-Added texture flag 512 to force the use of high color textures in low bit depth graphics modes. 
+Added texture flag 512 to force the use of high color textures in low bit depth graphics modes.
 
 'CameraProjMode camera,mode' added. 'mode' should be one of:
 
@@ -541,33 +541,33 @@ Some simple movie and DLL commands added:
 OpenMovie( file$ )
 --------------------------
 Opens a movie file and returns a movie handle.
- 
+
 CloseMovie movie
 --------------------------
 Closes a movie.
- 
+
 DrawMovie movie,x,y[,width,height]
 ---------------------------------------------------
 Draws a movie at x,y on the current buffer. Width/height default to movie width/height. Returns true if the movie is still playing.
- 
+
 Viewport and Origin are not taken into account, and the movie must be positioned entirely 'on screen'.
- 
+
 Movie support relys on DirectShow, so you will need to ensure the correct drivers are installed.
- 
+
 Movies will typically playback fastest at their natural size.
- 
+
 MovieWidth( movie )
 -----------------------------
 Returns the width of a movie.
- 
+
 MovieHeight( movie )
 ------------------------------
 Returns the height of a movie.
- 
+
 MoviePlaying( movie )
 -------------------------------
 Returns true if the specified movie is playing.
- 
+
 CallDLL( dll_name$,proc_name$[,in_bank,out_bank] )
 -------------------------------------------------------------------
 Calls the specified procedure in the specified DLL, and returns the integer value returned by the DLL procedure.
@@ -1003,7 +1003,7 @@ Note: CopyPixelFast requires both source and destination buffers to be locked, a
 
 ***** V1.47 *****
 
-ExecFile now uses ShellExecute instead of CreateProcess, so should be able to open documents 
+ExecFile now uses ShellExecute instead of CreateProcess, so should be able to open documents
 now.
 
 Played with the Win/DX internals a bit, so there may be some minor issues.
@@ -1167,7 +1167,7 @@ Summary of new sound commands:
 
 * sound=LoadSound( filename$ )
 
-Loads a sound file and returns a sound number. 
+Loads a sound file and returns a sound number.
 
 Formats supported: raw/wav/mp3
 
