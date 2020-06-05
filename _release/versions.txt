@@ -1,4 +1,10 @@
 
+***** V1.2b *****
+New Build VS 2017
+Build Icons Changes
+
+Installed docspak188.
+
 ***** V1.108b *****
 
 Installed docspak188.
